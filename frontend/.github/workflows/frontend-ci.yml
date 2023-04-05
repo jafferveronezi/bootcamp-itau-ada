@@ -24,4 +24,4 @@ jobs:
 
     - name: Build an Image
       run: |
-        docker build -t frontend-app:latest .
+        docker build -t frontend-app:1.0 .
