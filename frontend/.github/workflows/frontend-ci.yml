@@ -11,38 +11,17 @@ on:
     - feature/frontend
 
 jobs:
-  BuildAndDeploy:
-    name: Build frontend app and deploy
+  TestingBuild:
+    name: Test and Build
     runs-on: self-hosted
 
     steps:
-    - uses: actions/checkout@v3
-
-    # - name: Set up nodejs 14
-    #   uses: actions/setup-node@v3
-    #   with:
-    #     node-version: '14'
-
-    - name: Getting dependencies
+    - name: Install and Test
       run: |
         apt-get update && apt-get -y install npm
         npm install -g @angular/cli
+        ng test
 
-
-    - name: Build
+    - name: Build an Image
       run: |
         docker build -t frontend-app:latest .
-        docker push frontend-app:latest
-
-    # - name: Connect to Bastion Host
-    #   run: |
-    #     sudo apt-get update && sudo apt-get -y install sshuttle awscli
-    #     aws secretsmanager get-secret-value --secret-id ${{ secrets.PRIVATE_KEY_ARN }} --query SecretString --output text > ~/aws.pem
-    #     chmod 400 ~/aws.pem
-    #     sshuttle -r ubuntu@${{ secrets.BASTION_HOST_IP }} 10.10.0.0/24 -vv --ssh-cmd 'ssh -i ~/aws.pem  -o StrictHostKeyChecking=accept-new' &
-
-    # - name: Rollout K8s deployment
-    #   run: |
-    #     mkdir ~/.kube
-    #     aws secretsmanager get-secret-value --secret-id ${{ secrets.KUBECONFIG }} --query SecretString --output text > ~/.kube/config
-    #     kubectl rollout restart deployment frontend-app -n ada-apps || true
