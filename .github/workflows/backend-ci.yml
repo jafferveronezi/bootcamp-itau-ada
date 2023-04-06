@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - feature/backend
+    - main
 
 jobs:
   TestingBuild:
