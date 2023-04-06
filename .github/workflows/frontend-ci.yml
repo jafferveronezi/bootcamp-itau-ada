@@ -23,7 +23,7 @@ jobs:
       with:
         node-version: '14'
 
-    - name: Getting dependencies
+    - name: Getting Dependencies
       run: |
         cd app/
         npm install
