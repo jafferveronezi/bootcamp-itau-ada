@@ -8,7 +8,9 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - feature/frontend
+    - main
+    paths:
+    - 'frontend/**'
 
 jobs:
   TestingBuild:
